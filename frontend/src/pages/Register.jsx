@@ -22,15 +22,15 @@ export default function Register() {
   return (
     <AuthShell title="Criar conta" subtitle="Comece com categorias padrao e painel pronto.">
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-pastel-ink">
           Nome
           <input className="field mt-1" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
         </label>
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-pastel-ink">
           E-mail
           <input className="field mt-1" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
         </label>
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-pastel-ink">
           Senha
           <input className="field mt-1" type="password" minLength="6" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
         </label>
@@ -38,8 +38,8 @@ export default function Register() {
           {loading ? 'Criando...' : 'Criar conta'}
         </button>
       </form>
-      <p className="mt-4 text-center text-sm text-slate-500">
-        Ja tem conta? <Link className="font-semibold text-brand-600" to="/login">Entrar</Link>
+      <p className="mt-4 text-center text-sm text-pastel-muted">
+        Ja tem conta? <Link className="font-semibold text-brand-700" to="/login">Entrar</Link>
       </p>
     </AuthShell>
   );

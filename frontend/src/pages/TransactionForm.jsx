@@ -54,18 +54,18 @@ export default function TransactionForm() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-950">{id ? 'Editar transacao' : 'Nova transacao'}</h2>
-        <p className="text-sm text-slate-500">Informe os dados financeiros da movimentacao.</p>
+        <h2 className="text-2xl font-bold text-pastel-ink">{id ? 'Editar transacao' : 'Nova transacao'}</h2>
+        <p className="text-sm text-pastel-muted">Informe os dados financeiros da movimentacao.</p>
       </div>
       <form className="card space-y-4" onSubmit={handleSubmit}>
-        <label className="block text-sm font-medium text-slate-700">Descricao
+        <label className="block text-sm font-medium text-pastel-ink">Descricao
           <input className="field mt-1" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
         </label>
         <div className="grid gap-4 md:grid-cols-2">
-          <label className="block text-sm font-medium text-slate-700">Valor
+          <label className="block text-sm font-medium text-pastel-ink">Valor
             <input className="field mt-1" type="number" min="0.01" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} required />
           </label>
-          <label className="block text-sm font-medium text-slate-700">Tipo
+          <label className="block text-sm font-medium text-pastel-ink">Tipo
             <select className="field mt-1" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
               <option value="income">Receita</option>
               <option value="expense">Despesa</option>
@@ -73,13 +73,13 @@ export default function TransactionForm() {
           </label>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
-          <label className="block text-sm font-medium text-slate-700">Categoria
+          <label className="block text-sm font-medium text-pastel-ink">Categoria
             <select className="field mt-1" value={form.categoryId} onChange={(e) => setForm({ ...form, categoryId: e.target.value })} required>
               <option value="">Selecione</option>
               {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
             </select>
           </label>
-          <label className="block text-sm font-medium text-slate-700">Data
+          <label className="block text-sm font-medium text-pastel-ink">Data
             <input className="field mt-1" type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} required />
           </label>
         </div>

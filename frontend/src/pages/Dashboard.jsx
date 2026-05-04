@@ -33,40 +33,45 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-950">Dashboard</h2>
-        <p className="text-sm text-slate-500">Resumo financeiro do mes e indicadores recentes.</p>
+        <h2 className="text-2xl font-bold text-pastel-ink">Dashboard</h2>
+        <p className="text-sm text-pastel-muted">Resumo financeiro do mes e indicadores recentes.</p>
       </div>
 
       <section className="grid gap-4 md:grid-cols-3">
-        <Metric title="Saldo atual" value={currency(summary.balance)} tone={summary.balance >= 0 ? 'text-emerald-600' : 'text-red-600'} />
-        <Metric title="Receitas do mes" value={currency(summary.totalIncome)} tone="text-emerald-600" />
-        <Metric title="Despesas do mes" value={currency(summary.totalExpense)} tone="text-red-600" />
+        <Metric title="Saldo atual" value={currency(summary.balance)} tone={summary.balance >= 0 ? 'income-text' : 'expense-text'} />
+        <Metric title="Receitas do mes" value={currency(summary.totalIncome)} tone="income-text" />
+        <Metric title="Despesas do mes" value={currency(summary.totalExpense)} tone="expense-text" />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-5">
         <div className="card lg:col-span-3">
-          <h3 className="mb-4 font-semibold text-slate-900">Receitas vs despesas</h3>
+          <h3 className="mb-4 font-semibold text-pastel-ink">Receitas vs despesas</h3>
           <div className="h-72">
             <ResponsiveContainer>
               <BarChart data={monthly}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid stroke="#eadff2" strokeDasharray="3 3" />
                 <XAxis dataKey="label" />
                 <YAxis />
                 <Tooltip formatter={(value) => currency(value)} />
                 <Legend />
-                <Bar dataKey="income" name="Receitas" fill="#10b981" />
-                <Bar dataKey="expense" name="Despesas" fill="#ef4444" />
+                <Bar dataKey="income" name="Receitas" fill="#9ee8bd" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="expense" name="Despesas" fill="#ffb6c4" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
         <div className="card lg:col-span-2">
-          <h3 className="mb-4 font-semibold text-slate-900">Despesas por categoria</h3>
+          <h3 className="mb-4 font-semibold text-pastel-ink">Despesas por categoria</h3>
           <div className="h-72">
             <ResponsiveContainer>
               <PieChart>
                 <Pie data={byCategory} dataKey="total" nameKey="name" outerRadius={95} label>
-                  {byCategory.map((item) => <Cell key={item.categoryId} fill={item.color} />)}
+                  {byCategory.map((item, index) => (
+                    <Cell
+                      key={item.categoryId}
+                      fill={['#ffd6df', '#c8f7dc', '#e8ddff', '#ffe4c7', '#d9f0ff', '#f8d5ff'][index % 6]}
+                    />
+                  ))}
                 </Pie>
                 <Tooltip formatter={(value) => currency(value)} />
               </PieChart>
@@ -76,19 +81,19 @@ export default function Dashboard() {
       </section>
 
       <section className="card">
-        <h3 className="mb-4 font-semibold text-slate-900">Ultimas transacoes</h3>
+        <h3 className="mb-4 font-semibold text-pastel-ink">Ultimas transacoes</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="text-slate-500">
+            <thead className="text-pastel-muted">
               <tr><th className="py-2">Descricao</th><th>Categoria</th><th>Data</th><th className="text-right">Valor</th></tr>
             </thead>
             <tbody>
               {transactions.map((transaction) => (
-                <tr className="border-t border-slate-100" key={transaction.id}>
+                <tr className="border-t border-pastel-line" key={transaction.id}>
                   <td className="py-3">{transaction.description}</td>
                   <td>{transaction.category.name}</td>
                   <td>{dateLabel(transaction.date)}</td>
-                  <td className={`text-right font-semibold ${transaction.type === 'income' ? 'text-emerald-600' : 'text-red-600'}`}>
+                  <td className={`text-right font-semibold ${transaction.type === 'income' ? 'income-text' : 'expense-text'}`}>
                     {currency(transaction.amount)}
                   </td>
                 </tr>
@@ -104,7 +109,7 @@ export default function Dashboard() {
 function Metric({ title, value, tone }) {
   return (
     <div className="card">
-      <p className="text-sm text-slate-500">{title}</p>
+      <p className="text-sm text-pastel-muted">{title}</p>
       <strong className={`mt-2 block text-2xl ${tone}`}>{value}</strong>
     </div>
   );

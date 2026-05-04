@@ -41,8 +41,8 @@ export default function Transactions() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-slate-950">Transacoes</h2>
-          <p className="text-sm text-slate-500">Filtre, edite e acompanhe entradas e saidas.</p>
+          <h2 className="text-2xl font-bold text-pastel-ink">Transacoes</h2>
+          <p className="text-sm text-pastel-muted">Filtre, edite e acompanhe entradas e saidas.</p>
         </div>
         <Link className="btn-primary" to="/transactions/new">Nova transacao</Link>
       </div>
@@ -65,20 +65,20 @@ export default function Transactions() {
       {loading ? <Loading /> : (
         <div className="card overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="text-slate-500">
+            <thead className="text-pastel-muted">
               <tr><th className="py-2">Descricao</th><th>Tipo</th><th>Categoria</th><th>Data</th><th className="text-right">Valor</th><th /></tr>
             </thead>
             <tbody>
               {transactions.map((transaction) => (
-                <tr className="border-t border-slate-100" key={transaction.id}>
+                <tr className="border-t border-pastel-line" key={transaction.id}>
                   <td className="py-3">{transaction.description}</td>
                   <td>{transaction.type === 'income' ? 'Receita' : 'Despesa'}</td>
                   <td>{transaction.category.name}</td>
                   <td>{dateLabel(transaction.date)}</td>
                   <td className="text-right font-semibold">{currency(transaction.amount)}</td>
                   <td className="text-right">
-                    <Link className="mr-3 font-semibold text-brand-600" to={`/transactions/${transaction.id}/edit`}>Editar</Link>
-                    <button className="font-semibold text-red-600" type="button" onClick={() => remove(transaction.id)}>Excluir</button>
+                    <Link className="mr-3 font-semibold text-brand-700" to={`/transactions/${transaction.id}/edit`}>Editar</Link>
+                    <button className="font-semibold expense-text" type="button" onClick={() => remove(transaction.id)}>Excluir</button>
                   </td>
                 </tr>
               ))}
@@ -86,7 +86,7 @@ export default function Transactions() {
           </table>
           <div className="mt-4 flex items-center justify-end gap-2">
             <button className="btn-secondary" disabled={pagination.page <= 1} onClick={() => updateFilters({ page: pagination.page - 1 })}>Anterior</button>
-            <span className="text-sm text-slate-500">Pagina {pagination.page} de {pagination.totalPages || 1}</span>
+            <span className="text-sm text-pastel-muted">Pagina {pagination.page} de {pagination.totalPages || 1}</span>
             <button className="btn-secondary" disabled={pagination.page >= pagination.totalPages} onClick={() => updateFilters({ page: pagination.page + 1 })}>Proxima</button>
           </div>
         </div>

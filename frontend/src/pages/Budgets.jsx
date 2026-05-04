@@ -40,8 +40,8 @@ export default function Budgets() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-950">Orcamentos</h2>
-        <p className="text-sm text-slate-500">Defina limites mensais por categoria.</p>
+        <h2 className="text-2xl font-bold text-pastel-ink">Orcamentos</h2>
+        <p className="text-sm text-pastel-muted">Defina limites mensais por categoria.</p>
       </div>
       <div className="card grid gap-3 md:grid-cols-4">
         <input className="field" type="number" min="1" max="12" value={period.month} onChange={(e) => setPeriod({ ...period, month: Number(e.target.value) })} />
@@ -64,13 +64,13 @@ export default function Budgets() {
             <div className="card" key={budget.id}>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-semibold text-slate-900">{budget.category.name}</p>
-                  <p className="text-sm text-slate-500">{currency(budget.spent)} de {currency(budget.limit)}</p>
+                  <p className="font-semibold text-pastel-ink">{budget.category.name}</p>
+                  <p className="text-sm text-pastel-muted">{currency(budget.spent)} de {currency(budget.limit)}</p>
                 </div>
-                <span className={`text-sm font-bold ${budget.percent >= 80 ? 'text-red-600' : 'text-emerald-600'}`}>{budget.percent}%</span>
+                <span className={`text-sm font-bold ${budget.percent >= 80 ? 'expense-text' : 'income-text'}`}>{budget.percent}%</span>
               </div>
-              <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-100">
-                <div className={`${budget.percent >= 80 ? 'bg-red-500' : 'bg-emerald-500'} h-full rounded-full`} style={{ width: `${Math.min(budget.percent, 100)}%` }} />
+              <div className="mt-4 h-3 overflow-hidden rounded-full bg-brand-50">
+                <div className={`${budget.percent >= 80 ? 'bg-rose-300' : 'bg-emerald-300'} h-full rounded-full`} style={{ width: `${Math.min(budget.percent, 100)}%` }} />
               </div>
             </div>
           ))}

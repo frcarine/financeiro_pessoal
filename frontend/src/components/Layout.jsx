@@ -19,12 +19,12 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white">
+    <div className="min-h-screen">
+      <header className="border-b border-pastel-line bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-xl font-bold text-slate-950">FinancasPRO</h1>
-            <p className="text-sm text-slate-500">Ola, {user?.name}</p>
+            <h1 className="text-xl font-bold text-pastel-ink">FinancasPRO</h1>
+            <p className="text-sm text-pastel-muted">Ola, {user?.name}</p>
           </div>
           <nav className="flex flex-wrap gap-2">
             {links.map(([label, to]) => (
@@ -33,7 +33,7 @@ export default function Layout() {
                 to={to}
                 className={({ isActive }) =>
                   `rounded-lg px-3 py-2 text-sm font-medium transition ${
-                    isActive ? 'bg-brand-600 text-white' : 'text-slate-600 hover:bg-slate-100'
+                    isActive ? 'bg-brand-100 text-brand-700 shadow-sm' : 'text-pastel-muted hover:bg-brand-50'
                   }`
                 }
               >

@@ -30,8 +30,8 @@ export default function Reports() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-950">Relatorios</h2>
-        <p className="text-sm text-slate-500">Resumo mensal por categoria e exportacao CSV.</p>
+        <h2 className="text-2xl font-bold text-pastel-ink">Relatorios</h2>
+        <p className="text-sm text-pastel-muted">Resumo mensal por categoria e exportacao CSV.</p>
       </div>
       <div className="card flex flex-col gap-3 md:flex-row md:items-center">
         <input className="field md:w-28" type="number" min="1" max="12" value={period.month} onChange={(e) => setPeriod({ ...period, month: Number(e.target.value) })} />
@@ -43,16 +43,16 @@ export default function Reports() {
       {report && (
         <>
           <section className="grid gap-4 md:grid-cols-3">
-            <div className="card"><p className="text-sm text-slate-500">Receitas</p><strong className="text-2xl text-emerald-600">{currency(report.totalIncome)}</strong></div>
-            <div className="card"><p className="text-sm text-slate-500">Despesas</p><strong className="text-2xl text-red-600">{currency(report.totalExpense)}</strong></div>
-            <div className="card"><p className="text-sm text-slate-500">Saldo</p><strong className="text-2xl text-slate-950">{currency(report.balance)}</strong></div>
+            <div className="card"><p className="text-sm text-pastel-muted">Receitas</p><strong className="text-2xl income-text">{currency(report.totalIncome)}</strong></div>
+            <div className="card"><p className="text-sm text-pastel-muted">Despesas</p><strong className="text-2xl expense-text">{currency(report.totalExpense)}</strong></div>
+            <div className="card"><p className="text-sm text-pastel-muted">Saldo</p><strong className="text-2xl text-pastel-ink">{currency(report.balance)}</strong></div>
           </section>
           <section className="card overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-slate-500"><tr><th className="py-2">Categoria</th><th>Receitas</th><th>Despesas</th><th>Total</th></tr></thead>
+              <thead className="text-pastel-muted"><tr><th className="py-2">Categoria</th><th>Receitas</th><th>Despesas</th><th>Total</th></tr></thead>
               <tbody>
                 {report.byCategory.map((item) => (
-                  <tr className="border-t border-slate-100" key={item.category}>
+                  <tr className="border-t border-pastel-line" key={item.category}>
                     <td className="py-3">{item.category}</td>
                     <td>{currency(item.income)}</td>
                     <td>{currency(item.expense)}</td>

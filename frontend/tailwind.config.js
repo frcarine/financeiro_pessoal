@@ -5,11 +5,25 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca'
+          50: '#f7f3ff',
+          100: '#eee7ff',
+          200: '#ddd3ff',
+          500: '#a78bfa',
+          600: '#8b7cf6',
+          700: '#7467df'
+        },
+        pastel: {
+          mint: '#c8f7dc',
+          mintText: '#237553',
+          rose: '#ffd6df',
+          roseText: '#9f3f55',
+          peach: '#ffe4c7',
+          lilac: '#e8ddff',
+          sky: '#d9f0ff',
+          ink: '#51465f',
+          muted: '#8a7f94',
+          paper: '#fffaf6',
+          line: '#eadff2'
         }
       }
     }

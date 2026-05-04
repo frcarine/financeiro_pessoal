@@ -4,13 +4,16 @@
 
 body {
   margin: 0;
-  background: #f8fafc;
-  color: #0f172a;
+  background:
+    radial-gradient(circle at top left, rgba(255, 214, 223, 0.45), transparent 34rem),
+    radial-gradient(circle at bottom right, rgba(200, 247, 220, 0.48), transparent 34rem),
+    #fffaf6;
+  color: #51465f;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .field {
-  @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+  @apply w-full rounded-lg border border-pastel-line bg-white/80 px-3 py-2 text-sm text-pastel-ink outline-none transition placeholder:text-pastel-muted focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
 }
 
 .btn {
@@ -18,13 +21,41 @@ body {
 }
 
 .btn-primary {
-  @apply btn bg-brand-600 text-white hover:bg-brand-700;
+  @apply btn bg-brand-500 text-white shadow-sm hover:bg-brand-600;
 }
 
 .btn-secondary {
-  @apply btn border border-slate-200 bg-white text-slate-700 hover:bg-slate-50;
+  @apply btn border border-pastel-line bg-white/80 text-pastel-ink hover:bg-brand-50;
 }
 
 .card {
-  @apply rounded-lg border border-slate-200 bg-white p-4 shadow-sm;
+  @apply rounded-lg border border-pastel-line bg-white/80 p-4 shadow-sm shadow-pink-100/40 backdrop-blur;
+}
+
+.page-title {
+  @apply text-2xl font-bold text-pastel-ink;
+}
+
+.page-subtitle {
+  @apply text-sm text-pastel-muted;
+}
+
+.section-title {
+  @apply font-semibold text-pastel-ink;
+}
+
+.muted-text {
+  @apply text-pastel-muted;
+}
+
+.table-row {
+  @apply border-t border-pastel-line;
+}
+
+.income-text {
+  @apply text-pastel-mintText;
+}
+
+.expense-text {
+  @apply text-pastel-roseText;
 }

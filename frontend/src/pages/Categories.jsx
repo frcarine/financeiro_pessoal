@@ -56,8 +56,8 @@ export default function Categories() {
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <section className="lg:col-span-2">
-        <h2 className="text-2xl font-bold text-slate-950">Categorias</h2>
-        <p className="mb-4 text-sm text-slate-500">Organize receitas e despesas do seu jeito.</p>
+        <h2 className="text-2xl font-bold text-pastel-ink">Categorias</h2>
+        <p className="mb-4 text-sm text-pastel-muted">Organize receitas e despesas do seu jeito.</p>
         {loading ? <Loading /> : (
           <div className="grid gap-3 md:grid-cols-2">
             {categories.map((category) => (
@@ -65,13 +65,13 @@ export default function Categories() {
                 <div className="flex items-center gap-3">
                   <span className="h-4 w-4 rounded-full" style={{ background: category.color }} />
                   <div>
-                    <p className="font-semibold text-slate-900">{category.name}</p>
-                    <p className="text-xs text-slate-500">{category.icon}</p>
+                    <p className="font-semibold text-pastel-ink">{category.name}</p>
+                    <p className="text-xs text-pastel-muted">{category.icon}</p>
                   </div>
                 </div>
                 <div className="flex gap-2 text-sm font-semibold">
-                  <button className="text-brand-600" onClick={() => edit(category)} type="button">Editar</button>
-                  <button className="text-red-600" onClick={() => remove(category.id)} type="button">Excluir</button>
+                  <button className="text-brand-700" onClick={() => edit(category)} type="button">Editar</button>
+                  <button className="expense-text" onClick={() => remove(category.id)} type="button">Excluir</button>
                 </div>
               </div>
             ))}
@@ -79,14 +79,14 @@ export default function Categories() {
         )}
       </section>
       <form className="card h-fit space-y-4" onSubmit={handleSubmit}>
-        <h3 className="font-semibold text-slate-900">{editing ? 'Editar categoria' : 'Nova categoria'}</h3>
-        <label className="block text-sm font-medium text-slate-700">Nome
+        <h3 className="font-semibold text-pastel-ink">{editing ? 'Editar categoria' : 'Nova categoria'}</h3>
+        <label className="block text-sm font-medium text-pastel-ink">Nome
           <input className="field mt-1" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
         </label>
-        <label className="block text-sm font-medium text-slate-700">Cor
+        <label className="block text-sm font-medium text-pastel-ink">Cor
           <input className="field mt-1 h-11" type="color" value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })} />
         </label>
-        <label className="block text-sm font-medium text-slate-700">Icone
+        <label className="block text-sm font-medium text-pastel-ink">Icone
           <input className="field mt-1" value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} />
         </label>
         <button className="btn-primary w-full" type="submit">Salvar</button>
