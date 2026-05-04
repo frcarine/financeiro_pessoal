@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { Download, FileBarChart, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { MetricCard, PageHeader } from '../components';
 import { reportService } from '../services';
 import { currency } from '../utils/format';
 
@@ -29,23 +31,31 @@ export default function Reports() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-pastel-ink">Relatorios</h2>
-        <p className="text-sm text-pastel-muted">Resumo mensal por categoria e exportacao CSV.</p>
-      </div>
+      <PageHeader
+        title="Relatórios"
+        subtitle="Resumo mensal por categoria e exportação CSV."
+        icon={FileBarChart}
+        detail={report ? `${report.byCategory.length} categorias` : 'Mensal'}
+      />
       <div className="card flex flex-col gap-3 md:flex-row md:items-center">
         <input className="field md:w-28" type="number" min="1" max="12" value={period.month} onChange={(e) => setPeriod({ ...period, month: Number(e.target.value) })} />
         <input className="field md:w-32" type="number" min="2000" value={period.year} onChange={(e) => setPeriod({ ...period, year: Number(e.target.value) })} />
-        <button className="btn-primary" disabled={loading} type="button" onClick={loadReport}>{loading ? 'Gerando...' : 'Gerar relatorio'}</button>
-        <button className="btn-secondary" type="button" onClick={exportCsv}>Exportar CSV</button>
+        <button className="btn-primary gap-2" disabled={loading} type="button" onClick={loadReport}>
+          <Search size={16} />
+          {loading ? 'Gerando...' : 'Gerar relatório'}
+        </button>
+        <button className="btn-secondary gap-2" type="button" onClick={exportCsv}>
+          <Download size={16} />
+          Exportar CSV
+        </button>
       </div>
 
       {report && (
         <>
           <section className="grid gap-4 md:grid-cols-3">
-            <div className="card"><p className="text-sm text-pastel-muted">Receitas</p><strong className="text-2xl income-text">{currency(report.totalIncome)}</strong></div>
-            <div className="card"><p className="text-sm text-pastel-muted">Despesas</p><strong className="text-2xl expense-text">{currency(report.totalExpense)}</strong></div>
-            <div className="card"><p className="text-sm text-pastel-muted">Saldo</p><strong className="text-2xl text-pastel-ink">{currency(report.balance)}</strong></div>
+            <MetricCard title="Receitas" value={currency(report.totalIncome)} tone="income-text" detail="Total de entradas" />
+            <MetricCard title="Despesas" value={currency(report.totalExpense)} tone="expense-text" detail="Total de saídas" />
+            <MetricCard title="Saldo" value={currency(report.balance)} detail="Resultado do mês" />
           </section>
           <section className="card overflow-x-auto">
             <table className="w-full text-left text-sm">

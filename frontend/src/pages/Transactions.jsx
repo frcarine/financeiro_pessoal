@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Filter, Plus, ReceiptText, Search, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Loading, PageHeader } from '../components';
@@ -40,12 +41,24 @@ export default function Transactions() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Transacoes"
-        subtitle="Filtre, edite e acompanhe entradas e saidas."
-        action={<Link className="btn-primary" to="/transactions/new">Nova transação</Link>}
+        title="Transações"
+        subtitle="Vamos organizar suas finanças."
+        icon={ReceiptText}
+        detail={`${pagination.total || 0} registros`}
+        action={(
+          <Link className="btn-primary gap-2" to="/transactions/new">
+            <Plus size={16} />
+            Nova transação
+          </Link>
+        )}
       />
 
       <div className="card grid gap-3 md:grid-cols-5">
+        <div className="flex items-center gap-2 rounded-xl border border-pastel-line bg-white/70 px-3 py-2 text-pastel-muted md:col-span-5">
+          <Filter size={17} />
+          <span className="text-sm font-semibold text-pastel-ink">Filtros da listagem</span>
+          <Search className="ml-auto" size={16} />
+        </div>
         <select className="field" value={filters.type} onChange={(e) => updateFilters({ type: e.target.value })}>
           <option value="">Todos os tipos</option>
           <option value="income">Receitas</option>
@@ -76,7 +89,10 @@ export default function Transactions() {
                   <td className="text-right font-semibold">{currency(transaction.amount)}</td>
                   <td className="text-right">
                     <Link className="mr-3 font-semibold text-brand-700" to={`/transactions/${transaction.id}/edit`}>Editar</Link>
-                    <button className="font-semibold expense-text" type="button" onClick={() => remove(transaction.id)}>Excluir</button>
+                    <button className="inline-flex items-center gap-1 font-semibold expense-text" type="button" onClick={() => remove(transaction.id)}>
+                      <Trash2 size={14} />
+                      Excluir
+                    </button>
                   </td>
                 </tr>
               ))}

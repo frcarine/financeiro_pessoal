@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CalendarDays, PiggyBank, PlusCircle, TrendingUp } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { Loading, PageHeader } from '../components';
 import { budgetService, categoryService } from '../services';
@@ -40,10 +41,17 @@ export default function Budgets() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Orcamentos"
+        title="Orçamentos"
         subtitle="Defina limites mensais por categoria."
+        icon={PiggyBank}
+        detail={`${budgets.length} categorias`}
       />
       <div className="card grid gap-3 md:grid-cols-4">
+        <div className="flex items-center gap-2 rounded-xl border border-pastel-line bg-white/70 px-3 py-2 text-pastel-muted md:col-span-4">
+          <CalendarDays size={17} />
+          <span className="text-sm font-semibold text-pastel-ink">Período e novo limite</span>
+          <PlusCircle className="ml-auto" size={16} />
+        </div>
         <input className="field" type="number" min="1" max="12" value={period.month} onChange={(e) => setPeriod({ ...period, month: Number(e.target.value) })} />
         <input className="field" type="number" min="2000" value={period.year} onChange={(e) => setPeriod({ ...period, year: Number(e.target.value) })} />
         <form className="contents" onSubmit={handleSubmit}>
@@ -62,10 +70,15 @@ export default function Budgets() {
         <div className="grid gap-4 md:grid-cols-2">
           {budgets.map((budget) => (
             <div className="card" key={budget.id}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold text-pastel-ink">{budget.category.name}</p>
-                  <p className="text-sm text-pastel-muted">{currency(budget.spent)} de {currency(budget.limit)}</p>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-2xl ${budget.percent >= 80 ? 'bg-pastel-rose text-pastel-roseText' : 'bg-pastel-mint text-pastel-mintText'}`}>
+                    <TrendingUp size={18} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-pastel-ink">{budget.category.name}</p>
+                    <p className="text-sm text-pastel-muted">{currency(budget.spent)} de {currency(budget.limit)}</p>
+                  </div>
                 </div>
                 <span className={`text-sm font-bold ${budget.percent >= 80 ? 'expense-text' : 'income-text'}`}>{budget.percent}%</span>
               </div>

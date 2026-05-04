@@ -21,7 +21,7 @@ body {
 }
 
 .btn-primary {
-  @apply btn bg-brand-500 text-white shadow-sm hover:bg-brand-600;
+  @apply btn bg-brand-500 text-white shadow-sm shadow-brand-100 hover:bg-brand-600;
 }
 
 .btn-secondary {
@@ -29,7 +29,7 @@ body {
 }
 
 .card {
-  @apply rounded-lg border border-pastel-line bg-white/80 p-4 shadow-sm shadow-pink-100/40 backdrop-blur;
+  @apply rounded-2xl border border-pastel-line bg-white/80 p-4 shadow-sm shadow-pink-100/40 backdrop-blur;
 }
 
 .page-title {

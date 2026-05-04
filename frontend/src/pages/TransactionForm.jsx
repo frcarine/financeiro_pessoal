@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { ArrowLeft, ReceiptText, Save } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { PageHeader } from '../components';
 import { categoryService, transactionService } from '../services';
 
 const initialForm = {
@@ -53,12 +55,14 @@ export default function TransactionForm() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-pastel-ink">{id ? 'Editar transacao' : 'Nova transacao'}</h2>
-        <p className="text-sm text-pastel-muted">Informe os dados financeiros da movimentacao.</p>
-      </div>
+      <PageHeader
+        title={id ? 'Editar transação' : 'Nova transação'}
+        subtitle="Informe os dados financeiros da movimentação."
+        icon={ReceiptText}
+        detail={form.type === 'income' ? 'Receita' : 'Despesa'}
+      />
       <form className="card space-y-4" onSubmit={handleSubmit}>
-        <label className="block text-sm font-medium text-pastel-ink">Descricao
+        <label className="block text-sm font-medium text-pastel-ink">Descrição
           <input className="field mt-1" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
         </label>
         <div className="grid gap-4 md:grid-cols-2">
@@ -84,8 +88,14 @@ export default function TransactionForm() {
           </label>
         </div>
         <div className="flex gap-3">
-          <button className="btn-primary" type="submit">Salvar</button>
-          <button className="btn-secondary" type="button" onClick={() => navigate('/transactions')}>Cancelar</button>
+          <button className="btn-primary gap-2" type="submit">
+            <Save size={16} />
+            Salvar
+          </button>
+          <button className="btn-secondary gap-2" type="button" onClick={() => navigate('/transactions')}>
+            <ArrowLeft size={16} />
+            Cancelar
+          </button>
         </div>
       </form>
     </div>
