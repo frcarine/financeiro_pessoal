@@ -5,6 +5,7 @@ import {
   Budgets,
   Categories,
   Dashboard,
+  ExpenseDetails,
   Login,
   Register,
   Reports,
@@ -27,6 +28,7 @@ export default function App() {
       >
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />
+        <Route path="/expense-details" element={<ExpenseDetails />} />
         <Route path="/transactions/new" element={<TransactionForm />} />
         <Route path="/transactions/:id/edit" element={<TransactionForm />} />
         <Route path="/categories" element={<Categories />} />

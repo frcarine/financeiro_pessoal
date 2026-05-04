@@ -1,6 +1,7 @@
 import {
   BarChart3,
   ChartPie,
+  ClipboardList,
   FolderKanban,
   LogOut,
   PiggyBank,
@@ -13,6 +14,7 @@ import { useAuth } from '../context';
 const links = [
   ['Dashboard', '/dashboard', BarChart3],
   ['Transações', '/transactions', ReceiptText],
+  ['Gastos', '/expense-details', ClipboardList],
   ['Categorias', '/categories', FolderKanban],
   ['Orçamentos', '/budgets', PiggyBank],
   ['Relatórios', '/reports', ChartPie]
