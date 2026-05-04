@@ -1,16 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CalendarDays, FileText, ListChecks, Percent, ReceiptText, Search } from 'lucide-react';
+import { CalendarDays, FileText, ListChecks, Percent, PlusCircle, ReceiptText, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { DataTable, Loading, MetricCard, PageHeader } from '../components';
-import { reportService } from '../services';
+import { categoryService, reportService, transactionService } from '../services';
 import { currency, dateLabel } from '../utils';
 
 export default function ExpenseDetails() {
   const now = new Date();
   const [period, setPeriod] = useState({ month: now.getMonth() + 1, year: now.getFullYear() });
   const [report, setReport] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [loading, setLoading] = useState(true);
+  const [savingExpense, setSavingExpense] = useState(false);
+  const [newExpense, setNewExpense] = useState({
+    description: '',
+    amount: '',
+    installment: '',
+    categoryId: '',
+    date: new Date().toISOString().slice(0, 10)
+  });
 
   async function loadReport(nextPeriod = period) {
     setLoading(true);
@@ -28,6 +37,7 @@ export default function ExpenseDetails() {
 
   useEffect(() => {
     loadReport();
+    categoryService.list().then(({ data }) => setCategories(data));
   }, []);
 
   const expenseCategories = useMemo(() => {
@@ -61,6 +71,44 @@ export default function ExpenseDetails() {
   async function handleSearch() {
     setSelectedCategory('');
     await loadReport(period);
+  }
+
+  async function handleAddExpense(event) {
+    event.preventDefault();
+
+    const categoryId = newExpense.categoryId || categories.find((category) => category.name === selectedCategory)?.id;
+    if (!newExpense.description || Number(newExpense.amount) <= 0 || !categoryId || !newExpense.date) {
+      toast.error('Preencha descrição, valor, categoria e data');
+      return;
+    }
+
+    const description = newExpense.installment
+      ? `${newExpense.description} - ${newExpense.installment}`
+      : newExpense.description;
+
+    setSavingExpense(true);
+    try {
+      await transactionService.create({
+        description,
+        amount: Number(newExpense.amount),
+        type: 'expense',
+        categoryId,
+        date: newExpense.date
+      });
+      toast.success('Gasto adicionado ao detalhamento');
+      setNewExpense((current) => ({
+        ...current,
+        description: '',
+        amount: '',
+        installment: '',
+        categoryId
+      }));
+      await loadReport(period);
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Erro ao adicionar gasto');
+    } finally {
+      setSavingExpense(false);
+    }
   }
 
   if (loading) return <Loading label="Carregando detalhes de gastos..." />;
@@ -123,6 +171,82 @@ export default function ExpenseDetails() {
           icon={CalendarDays}
           accent="bg-pastel-sky text-brand-700"
         />
+      </section>
+
+      <section className="card">
+        <div className="mb-4 flex flex-col gap-1">
+          <h3 className="flex items-center gap-2 font-semibold text-pastel-ink">
+            <PlusCircle size={18} />
+            Adicionar compra ao valor cheio
+          </h3>
+          <p className="text-sm text-pastel-muted">
+            Cadastre cada gasto que explica o total, como "salão" ou "celular Bemol", e informe o parcelamento na observação.
+          </p>
+        </div>
+
+        <form className="grid gap-3 lg:grid-cols-[1.4fr_140px_1fr_1fr_150px_auto]" onSubmit={handleAddExpense}>
+          <label className="block text-sm font-medium text-pastel-ink">
+            Descrição da compra
+            <input
+              className="field mt-1"
+              placeholder="Ex: Salão"
+              value={newExpense.description}
+              onChange={(event) => setNewExpense({ ...newExpense, description: event.target.value })}
+            />
+          </label>
+          <label className="block text-sm font-medium text-pastel-ink">
+            Valor
+            <input
+              className="field mt-1"
+              min="0.01"
+              placeholder="150"
+              step="0.01"
+              type="number"
+              value={newExpense.amount}
+              onChange={(event) => setNewExpense({ ...newExpense, amount: event.target.value })}
+            />
+          </label>
+          <label className="block text-sm font-medium text-pastel-ink">
+            Parcelamento / observação
+            <input
+              className="field mt-1"
+              placeholder="Ex: parcelado em 2x"
+              value={newExpense.installment}
+              onChange={(event) => setNewExpense({ ...newExpense, installment: event.target.value })}
+            />
+          </label>
+          <label className="block text-sm font-medium text-pastel-ink">
+            Categoria
+            <select
+              className="field mt-1"
+              value={newExpense.categoryId || categories.find((category) => category.name === selectedCategory)?.id || ''}
+              onChange={(event) => setNewExpense({ ...newExpense, categoryId: event.target.value })}
+            >
+              <option value="">Selecione</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>{category.name}</option>
+              ))}
+            </select>
+          </label>
+          <label className="block text-sm font-medium text-pastel-ink">
+            Data
+            <input
+              className="field mt-1"
+              type="date"
+              value={newExpense.date}
+              onChange={(event) => setNewExpense({ ...newExpense, date: event.target.value })}
+            />
+          </label>
+          <button className="btn-primary mt-6 gap-2" disabled={savingExpense} type="submit">
+            <PlusCircle size={16} />
+            {savingExpense ? 'Salvando...' : 'Adicionar'}
+          </button>
+        </form>
+
+        <div className="mt-3 rounded-2xl bg-brand-50 px-4 py-3 text-sm text-pastel-muted">
+          Exemplos: <span className="font-semibold text-pastel-ink">Salão - parcelado em 2x</span> ou{' '}
+          <span className="font-semibold text-pastel-ink">Celular Bemol - parcelado em 10x</span>.
+        </div>
       </section>
 
       <section className="card">
