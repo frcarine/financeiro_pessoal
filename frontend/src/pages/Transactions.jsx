@@ -42,7 +42,7 @@ export default function Transactions() {
       <PageHeader
         title="Transacoes"
         subtitle="Filtre, edite e acompanhe entradas e saidas."
-        action={<Link className="btn-primary" to="/transactions/new">Nova transacao</Link>}
+        action={<Link className="btn-primary" to="/transactions/new">Nova transação</Link>}
       />
 
       <div className="card grid gap-3 md:grid-cols-5">
@@ -64,7 +64,7 @@ export default function Transactions() {
         <div className="card overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="text-pastel-muted">
-              <tr><th className="py-2">Descricao</th><th>Tipo</th><th>Categoria</th><th>Data</th><th className="text-right">Valor</th><th /></tr>
+              <tr><th className="py-2">Descrição</th><th>Tipo</th><th>Categoria</th><th>Data</th><th className="text-right">Valor</th><th /></tr>
             </thead>
             <tbody>
               {transactions.map((transaction) => (

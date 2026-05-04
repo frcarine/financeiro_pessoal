@@ -1,6 +1,24 @@
-# FinancasPRO
+# Financeiro Pessoal
 
-Aplicacao completa de financas pessoais com backend em Node.js/Express, Prisma com SQLite e frontend em React/Vite.
+Sistema completo de financas pessoais criado com frontend em React/Vite e backend em Node.js/Express. O projeto permite cadastrar usuarios, autenticar com JWT, gerenciar transacoes, categorias, orcamentos mensais, visualizar dashboard com graficos e exportar relatorios em CSV.
+
+Repositorio sugerido:
+
+```text
+financeiro_pessoal
+```
+
+## O que foi criado
+
+- Backend REST API com Node.js, Express, Prisma ORM e SQLite.
+- Autenticacao com cadastro, login, senha criptografada com bcryptjs e token JWT.
+- Middleware de autenticacao para proteger rotas privadas.
+- Validacao de entrada com express-validator.
+- Frontend React 18 com Vite, React Router DOM, Axios, Recharts, date-fns e Tailwind CSS.
+- Layout responsivo em cores pasteis.
+- Organizacao do frontend em `components`, `context`, `layouts`, `pages`, `services` e `utils`.
+- Seed inicial com usuario de teste, categorias padrao, transacoes e orcamentos.
+- Exportacao de relatorio mensal em CSV.
 
 ## Recursos
 
@@ -12,15 +30,55 @@ Aplicacao completa de financas pessoais com backend em Node.js/Express, Prisma c
 - Relatorios mensais e exportacao CSV.
 - Seed com usuario de teste, categorias padrao e transacoes de exemplo.
 
+## Tecnologias
+
+Backend:
+
+- Node.js
+- Express
+- Prisma ORM
+- SQLite
+- bcryptjs
+- jsonwebtoken
+- cors
+- dotenv
+- express-validator
+
+Frontend:
+
+- React 18
+- Vite
+- Tailwind CSS
+- React Router DOM
+- Axios
+- Recharts
+- date-fns
+- react-toastify
+
 ## Estrutura
 
 ```text
 financas-pro/
-├── backend
-│   ├── prisma
-│   └── src
-└── frontend
-    └── src
+├── backend/
+│   ├── prisma/
+│   │   ├── migrations/
+│   │   └── schema.prisma
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   └── utils/
+│   └── seed.js
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   ├── context/
+    │   ├── layouts/
+    │   ├── pages/
+    │   ├── services/
+    │   └── utils/
+    └── vite.config.js
 ```
 
 ## Backend
@@ -47,6 +105,12 @@ E-mail: teste@financaspro.com
 Senha: 123456
 ```
 
+Usuario adicional criado localmente:
+
+```text
+E-mail: carine.pontes.ferreira@gmail.com
+```
+
 ## Frontend
 
 Em outro terminal:
@@ -62,6 +126,12 @@ O app roda em:
 
 ```text
 http://localhost:5173
+```
+
+Se a porta estiver ocupada:
+
+```bash
+npm run dev -- --port 5174
 ```
 
 ## Variaveis de ambiente

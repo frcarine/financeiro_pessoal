@@ -23,7 +23,7 @@ export default function AppLayout() {
       <header className="border-b border-pastel-line bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-xl font-bold text-pastel-ink">FinancasPRO</h1>
+            <h1 className="text-xl font-bold text-pastel-ink">Financeiro</h1>
             <p className="text-sm text-pastel-muted">Ola, {user?.name}</p>
           </div>
           <nav className="flex flex-wrap gap-2">
