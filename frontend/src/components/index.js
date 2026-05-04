@@ -1,4 +1,9 @@
 export { default as AuthShell } from './AuthShell';
+export { default as CategoryPieChart } from './CategoryPieChart';
+export { default as DataTable } from './DataTable';
 export { default as Layout } from './Layout';
 export { default as Loading } from './Loading';
+export { default as MetricCard } from './MetricCard';
+export { default as MonthlyBarChart } from './MonthlyBarChart';
+export { default as PageHeader } from './PageHeader';
 export { default as ProtectedRoute } from './ProtectedRoute';

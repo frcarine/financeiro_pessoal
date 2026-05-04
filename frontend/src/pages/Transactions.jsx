@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Loading from '../components/Loading';
+import { Loading, PageHeader } from '../components';
 import { categoryService, transactionService } from '../services';
 import { currency, dateLabel } from '../utils/format';
 
@@ -39,13 +39,11 @@ export default function Transactions() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-pastel-ink">Transacoes</h2>
-          <p className="text-sm text-pastel-muted">Filtre, edite e acompanhe entradas e saidas.</p>
-        </div>
-        <Link className="btn-primary" to="/transactions/new">Nova transacao</Link>
-      </div>
+      <PageHeader
+        title="Transacoes"
+        subtitle="Filtre, edite e acompanhe entradas e saidas."
+        action={<Link className="btn-primary" to="/transactions/new">Nova transacao</Link>}
+      />
 
       <div className="card grid gap-3 md:grid-cols-5">
         <select className="field" value={filters.type} onChange={(e) => updateFilters({ type: e.target.value })}>

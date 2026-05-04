@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import Loading from '../components/Loading';
+import { Loading, PageHeader } from '../components';
 import { categoryService } from '../services';
 
 const initialForm = { name: '', color: '#6366f1', icon: 'tag' };
@@ -56,8 +56,12 @@ export default function Categories() {
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <section className="lg:col-span-2">
-        <h2 className="text-2xl font-bold text-pastel-ink">Categorias</h2>
-        <p className="mb-4 text-sm text-pastel-muted">Organize receitas e despesas do seu jeito.</p>
+        <div className="mb-4">
+          <PageHeader
+            title="Categorias"
+            subtitle="Organize receitas e despesas do seu jeito."
+          />
+        </div>
         {loading ? <Loading /> : (
           <div className="grid gap-3 md:grid-cols-2">
             {categories.map((category) => (

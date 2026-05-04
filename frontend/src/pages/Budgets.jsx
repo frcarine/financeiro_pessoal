@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import Loading from '../components/Loading';
+import { Loading, PageHeader } from '../components';
 import { budgetService, categoryService } from '../services';
 import { currency } from '../utils/format';
 
@@ -39,10 +39,10 @@ export default function Budgets() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-pastel-ink">Orcamentos</h2>
-        <p className="text-sm text-pastel-muted">Defina limites mensais por categoria.</p>
-      </div>
+      <PageHeader
+        title="Orcamentos"
+        subtitle="Defina limites mensais por categoria."
+      />
       <div className="card grid gap-3 md:grid-cols-4">
         <input className="field" type="number" min="1" max="12" value={period.month} onChange={(e) => setPeriod({ ...period, month: Number(e.target.value) })} />
         <input className="field" type="number" min="2000" value={period.year} onChange={(e) => setPeriod({ ...period, year: Number(e.target.value) })} />
