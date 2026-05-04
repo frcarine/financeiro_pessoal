@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loading from '../components/Loading';
-import api from '../services/api';
+import { categoryService, transactionService } from '../services';
 import { currency, dateLabel } from '../utils/format';
 
 export default function Transactions() {
@@ -14,19 +14,19 @@ export default function Transactions() {
 
   async function load(params = filters) {
     setLoading(true);
-    const { data } = await api.get('/transactions', { params });
+    const { data } = await transactionService.list(params);
     setTransactions(data.items);
     setPagination(data.pagination);
     setLoading(false);
   }
 
   useEffect(() => {
-    api.get('/categories').then(({ data }) => setCategories(data));
+    categoryService.list().then(({ data }) => setCategories(data));
     load();
   }, []);
 
   async function remove(id) {
-    await api.delete(`/transactions/${id}`);
+    await transactionService.remove(id);
     toast.success('Transacao excluida');
     load();
   }

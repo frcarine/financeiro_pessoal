@@ -1,14 +1,15 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout';
-import ProtectedRoute from './components/ProtectedRoute';
-import Budgets from './pages/Budgets';
-import Categories from './pages/Categories';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Reports from './pages/Reports';
-import TransactionForm from './pages/TransactionForm';
-import Transactions from './pages/Transactions';
+import { Layout, ProtectedRoute } from './components';
+import {
+  Budgets,
+  Categories,
+  Dashboard,
+  Login,
+  Register,
+  Reports,
+  TransactionForm,
+  Transactions
+} from './pages';
 
 export default function App() {
   return (

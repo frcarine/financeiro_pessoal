@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Loading from '../components/Loading';
-import api from '../services/api';
+import { budgetService, categoryService } from '../services';
 import { currency } from '../utils/format';
 
 export default function Budgets() {
@@ -15,8 +15,8 @@ export default function Budgets() {
   async function load() {
     setLoading(true);
     const [categoriesRes, budgetsRes] = await Promise.all([
-      api.get('/categories'),
-      api.get('/budgets', { params: period })
+      categoryService.list(),
+      budgetService.list(period)
     ]);
     setCategories(categoriesRes.data);
     setBudgets(budgetsRes.data);
@@ -31,7 +31,7 @@ export default function Budgets() {
       toast.error('Informe categoria e limite valido');
       return;
     }
-    await api.post('/budgets', { ...period, ...form });
+    await budgetService.save({ ...period, ...form });
     toast.success('Orcamento salvo');
     setForm({ categoryId: '', limit: '' });
     load();

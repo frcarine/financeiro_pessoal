@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import api from '../services/api';
+import { reportService } from '../services';
 import { currency } from '../utils/format';
 
 export default function Reports() {
@@ -11,13 +11,13 @@ export default function Reports() {
 
   async function loadReport() {
     setLoading(true);
-    const { data } = await api.get('/reports/monthly', { params: period });
+    const { data } = await reportService.monthly(period);
     setReport(data);
     setLoading(false);
   }
 
   async function exportCsv() {
-    const { data } = await api.get('/reports/export-csv', { params: period, responseType: 'blob' });
+    const { data } = await reportService.exportCsv(period);
     const url = URL.createObjectURL(data);
     const link = document.createElement('a');
     link.href = url;

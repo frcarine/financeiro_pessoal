@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Loading from '../components/Loading';
-import api from '../services/api';
+import { categoryService } from '../services';
 
 const initialForm = { name: '', color: '#6366f1', icon: 'tag' };
 
@@ -13,7 +13,7 @@ export default function Categories() {
 
   async function load() {
     setLoading(true);
-    const { data } = await api.get('/categories');
+    const { data } = await categoryService.list();
     setCategories(data);
     setLoading(false);
   }
@@ -32,10 +32,10 @@ export default function Categories() {
       return;
     }
     if (editing) {
-      await api.put(`/categories/${editing}`, form);
+      await categoryService.update(editing, form);
       toast.success('Categoria atualizada');
     } else {
-      await api.post('/categories', form);
+      await categoryService.create(form);
       toast.success('Categoria criada');
     }
     setEditing(null);
@@ -45,7 +45,7 @@ export default function Categories() {
 
   async function remove(id) {
     try {
-      await api.delete(`/categories/${id}`);
+      await categoryService.remove(id);
       toast.success('Categoria excluida');
       load();
     } catch (error) {

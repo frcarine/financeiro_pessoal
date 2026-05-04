@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import api from '../services/api';
+import { categoryService, transactionService } from '../services';
 
 const initialForm = {
   description: '',
@@ -19,10 +19,10 @@ export default function TransactionForm() {
 
   useEffect(() => {
     async function load() {
-      const categoriesRes = await api.get('/categories');
+      const categoriesRes = await categoryService.list();
       setCategories(categoriesRes.data);
       if (id) {
-        const { data: transaction } = await api.get(`/transactions/${id}`);
+        const { data: transaction } = await transactionService.get(id);
         setForm({
           description: transaction.description,
           amount: transaction.amount,
@@ -42,10 +42,10 @@ export default function TransactionForm() {
       return;
     }
     if (id) {
-      await api.put(`/transactions/${id}`, form);
+      await transactionService.update(id, form);
       toast.success('Transacao atualizada');
     } else {
-      await api.post('/transactions', form);
+      await transactionService.create(form);
       toast.success('Transacao criada');
     }
     navigate('/transactions');

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
-import api from '../services/api';
+import { authService } from '../services';
 
 const AuthContext = createContext(null);
 
@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem('financaspro:token');
     if (!token) return;
 
-    api.get('/auth/me')
+    authService.me()
       .then(({ data }) => {
         setUser(data);
         localStorage.setItem('financaspro:user', JSON.stringify(data));
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
   async function login(email, password) {
     setLoading(true);
     try {
-      const { data } = await api.post('/auth/login', { email, password });
+      const { data } = await authService.login(email, password);
       localStorage.setItem('financaspro:token', data.token);
       localStorage.setItem('financaspro:user', JSON.stringify(data.user));
       setUser(data.user);
@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
   async function register(payload) {
     setLoading(true);
     try {
-      const { data } = await api.post('/auth/register', payload);
+      const { data } = await authService.register(payload);
       localStorage.setItem('financaspro:token', data.token);
       localStorage.setItem('financaspro:user', JSON.stringify(data.user));
       setUser(data.user);

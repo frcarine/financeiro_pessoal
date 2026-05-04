@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import Loading from '../components/Loading';
-import api from '../services/api';
+import { dashboardService, transactionService } from '../services';
 import { currency, dateLabel } from '../utils/format';
 
 export default function Dashboard() {
@@ -14,10 +14,10 @@ export default function Dashboard() {
   useEffect(() => {
     async function load() {
       const [summaryRes, monthlyRes, categoryRes, transactionsRes] = await Promise.all([
-        api.get('/dashboard/summary'),
-        api.get('/dashboard/monthly'),
-        api.get('/dashboard/by-category'),
-        api.get('/transactions?page=1')
+        dashboardService.summary(),
+        dashboardService.monthly(),
+        dashboardService.byCategory(),
+        transactionService.list({ page: 1 })
       ]);
       setSummary(summaryRes.data);
       setMonthly(monthlyRes.data);
