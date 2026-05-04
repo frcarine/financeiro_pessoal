@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Layout, ProtectedRoute } from './components';
+import { ProtectedRoute } from './components';
+import { AppLayout } from './layouts';
 import {
   Budgets,
   Categories,
@@ -20,7 +21,7 @@ export default function App() {
       <Route
         element={(
           <ProtectedRoute>
-            <Layout />
+            <AppLayout />
           </ProtectedRoute>
         )}
       >

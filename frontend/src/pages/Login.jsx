@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthShell from '../components/AuthShell';
 import { useAuth } from '../context/AuthContext';
+import { AuthLayout } from '../layouts';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function Login() {
   }
 
   return (
-    <AuthShell title="Entrar" subtitle="Acesse sua conta para acompanhar suas financas.">
+    <AuthLayout title="Entrar" subtitle="Acesse sua conta para acompanhar suas financas.">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <label className="block text-sm font-medium text-pastel-ink">
           E-mail
@@ -33,6 +33,6 @@ export default function Login() {
       <p className="mt-4 text-center text-sm text-pastel-muted">
         Ainda nao tem conta? <Link className="font-semibold text-brand-700" to="/register">Criar cadastro</Link>
       </p>
-    </AuthShell>
+    </AuthLayout>
   );
 }

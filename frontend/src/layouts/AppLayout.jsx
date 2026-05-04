@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context';
 
 const links = [
   ['Dashboard', '/dashboard'],
@@ -9,7 +9,7 @@ const links = [
   ['Relatorios', '/reports']
 ];
 
-export default function Layout() {
+export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 

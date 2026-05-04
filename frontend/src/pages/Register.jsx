@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import AuthShell from '../components/AuthShell';
 import { useAuth } from '../context/AuthContext';
+import { AuthLayout } from '../layouts';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function Register() {
   }
 
   return (
-    <AuthShell title="Criar conta" subtitle="Comece com categorias padrao e painel pronto.">
+    <AuthLayout title="Criar conta" subtitle="Comece com categorias padrao e painel pronto.">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <label className="block text-sm font-medium text-pastel-ink">
           Nome
@@ -41,6 +41,6 @@ export default function Register() {
       <p className="mt-4 text-center text-sm text-pastel-muted">
         Ja tem conta? <Link className="font-semibold text-brand-700" to="/login">Entrar</Link>
       </p>
-    </AuthShell>
+    </AuthLayout>
   );
 }

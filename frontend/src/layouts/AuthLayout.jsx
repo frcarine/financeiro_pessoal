@@ -1,4 +1,4 @@
-export default function AuthShell({ title, subtitle, children }) {
+export default function AuthLayout({ title, subtitle, children }) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-md rounded-lg border border-pastel-line bg-white/80 p-6 shadow-sm shadow-pink-100/50 backdrop-blur">
