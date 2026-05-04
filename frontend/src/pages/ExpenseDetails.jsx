@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CalendarDays, ListChecks, ReceiptText, Search } from 'lucide-react';
+import { CalendarDays, FileText, ListChecks, Percent, ReceiptText, Search } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { DataTable, Loading, MetricCard, PageHeader } from '../components';
 import { reportService } from '../services';
@@ -46,6 +46,13 @@ export default function ExpenseDetails() {
 
   const selectedTotal = filteredExpenses.reduce((total, transaction) => total + transaction.amount, 0);
   const selectedSummary = expenseCategories.find((category) => category.category === selectedCategory);
+  const sortedExpenses = [...filteredExpenses].sort((a, b) => b.amount - a.amount);
+  const averageExpense = filteredExpenses.length > 0 ? selectedTotal / filteredExpenses.length : 0;
+
+  function expenseShare(amount) {
+    if (!selectedTotal) return '0%';
+    return `${((amount / selectedTotal) * 100).toFixed(1)}%`;
+  }
 
   function updatePeriod(field, value) {
     setPeriod((current) => ({ ...current, [field]: Number(value) }));
@@ -105,7 +112,7 @@ export default function ExpenseDetails() {
         <MetricCard
           title="Quantidade de compras"
           value={filteredExpenses.length}
-          detail="Itens encontrados no período"
+          detail={`Media de ${currency(averageExpense)} por compra`}
           icon={ListChecks}
           accent="bg-brand-100 text-brand-700"
         />
@@ -116,6 +123,49 @@ export default function ExpenseDetails() {
           icon={CalendarDays}
           accent="bg-pastel-sky text-brand-700"
         />
+      </section>
+
+      <section className="card">
+        <div className="mb-4 flex flex-col gap-1">
+          <h3 className="flex items-center gap-2 font-semibold text-pastel-ink">
+            <FileText size={18} />
+            Descrição do valor cheio
+          </h3>
+          <p className="text-sm text-pastel-muted">
+            O total de {currency(selectedTotal)} é formado pelas compras abaixo, ordenadas da maior para a menor.
+          </p>
+        </div>
+
+        {sortedExpenses.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-pastel-line bg-white/60 p-4 text-sm text-pastel-muted">
+            Nenhum gasto encontrado para descrever este valor.
+          </div>
+        ) : (
+          <div className="grid gap-3">
+            {sortedExpenses.map((expense, index) => (
+              <div className="flex flex-col gap-3 rounded-2xl border border-pastel-line bg-white/70 p-3 md:flex-row md:items-center md:justify-between" key={expense.id}>
+                <div className="flex items-start gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-pastel-rose text-sm font-bold text-pastel-roseText">
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-pastel-ink">{expense.description}</p>
+                    <p className="text-sm text-pastel-muted">
+                      {expense.category.name} em {dateLabel(expense.date)}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between gap-3 md:min-w-56">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
+                    <Percent size={13} />
+                    {expenseShare(expense.amount)} do total
+                  </span>
+                  <strong className="text-lg expense-text">{currency(expense.amount)}</strong>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="card">
@@ -131,6 +181,12 @@ export default function ExpenseDetails() {
             { key: 'description', label: 'Compra' },
             { key: 'category', label: 'Categoria', render: (transaction) => transaction.category.name },
             { key: 'date', label: 'Data', render: (transaction) => dateLabel(transaction.date) },
+            {
+              key: 'share',
+              label: '% do total',
+              align: 'right',
+              render: (transaction) => <span className="font-semibold text-brand-700">{expenseShare(transaction.amount)}</span>
+            },
             {
               key: 'amount',
               label: 'Valor',
